@@ -60,12 +60,15 @@
     }
     /* CSS for pagination buttons */
 
+
+
 </style>
 <body>
   <div class='header'>
     <div class='logo-container'>
         <img class='logo' src="../public//mindbrinklogo.jpg"/>
     </div>
+    <h2>Campus Recruitment Aptitude Test - 2023</h2>
     <div class='nav-items'>
         <ul>
         <!-- <li>Home</li>
@@ -121,7 +124,7 @@
 </body>
 <script>
 // Set the time limit to 30 minutes (in milliseconds)
-const timeLimit = 30 * 60 * 1000;
+const timeLimit = 60 * 60 * 1000;
 
 const quizBox = document.getElementById("quiz-container");
 
@@ -211,7 +214,7 @@ setTimeout(() => {
 
   question = `
       <div id="quizquestion">
-        <span>?]${attempted+1}</span><p>${questionsleft[0].question} <span>?</span></p>
+        <span>Q${attempted+1}.</span><p>${questionsleft[0].question} <span>?</span></p>
         <input id="answer" name="answer" value="${questionsleft[0].correctanswer}" hidden>
         <input id="marks" name="answer" value="${questionsleft[0].marks}" hidden>
         </div>
@@ -225,6 +228,11 @@ setTimeout(() => {
           `;
     })
     quizBox.innerHTML = question
+    quizBox.addEventListener('copy', function(event) {
+  // event.preventDefault();
+  event.stopPropagation();
+  return false;
+});
 
     
     function submitAnswer(){
@@ -260,6 +268,15 @@ setTimeout(() => {
 //   alert("You have successfully completed your exam!");
 //   sessionStorage.removeItem("startTime"); // Remove start time from session storage
 // }
+function preventCopy(event){
+    // event.preventDefault();
+  event.stopPropagation();
+  return false;
+  }
+document.getElementById('directions').addEventListener('copy',preventCopy)
+  document.getElementById('directions2').addEventListener('copy',preventCopy)
+  document.getElementById('directions3').addEventListener('copy',preventCopy)
+  document.getElementById('directions4').addEventListener('copy',preventCopy)
 
 
 </script>

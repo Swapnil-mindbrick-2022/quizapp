@@ -11,7 +11,8 @@ const passport = require('passport')
 const {initializingPassport} = require('./config/passportConfig')
 
 
-const DB = "mongodb+srv://shu810:shu810@cluster0.uub44.mongodb.net/quizdb?retryWrites=true&w=majority"
+ const DB = "mongodb+srv://shu810:shu810@cluster0.uub44.mongodb.net/quizdb?retryWrites=true&w=majority"
+// const DB= "mongodb+srv://Mindbrick:Password@mindbrick.zdiyp2p.mongodb.net/quizdb?retryWrites=true&w=majority"
 
 mongoose.connect(DB, {
     useNewUrlParser: true,
