@@ -229,7 +229,7 @@ setTimeout(() => {
     })
     quizBox.innerHTML = question
     quizBox.addEventListener('copy', function(event) {
-  // event.preventDefault();
+  event.preventDefault();
   event.stopPropagation();
   return false;
 });
@@ -269,7 +269,7 @@ setTimeout(() => {
 //   sessionStorage.removeItem("startTime"); // Remove start time from session storage
 // }
 function preventCopy(event){
-    // event.preventDefault();
+    event.preventDefault();
   event.stopPropagation();
   return false;
   }
