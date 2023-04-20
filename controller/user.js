@@ -48,10 +48,10 @@ const Noty = require('noty')
                 const hallticket = req.user.Rollno
                 const userId = req.user._id;
                 let totalQuestions;
-                // Results.findOne({emailId:useremail}).then((data)=>{
-                //     if (data){
-                //         return res.send('You have already Appeared in this Test..')
-                //     }
+                Results.findOne({emailId:useremail}).then((data)=>{
+                    if (data){
+                        return res.send('You have already Appeared in this Test..')
+                    }
                     
                 req.session.testStatus = "active"
                     const result = new Results({
@@ -67,7 +67,7 @@ const Noty = require('noty')
                     })
         
                 .catch(err => console.log(err))
-                // }).catch(err => console.log(err))
+                }).catch(err => console.log(err))
             },
             async downloadResult(req,res){
                 Results.find({}).then((data)=>{
