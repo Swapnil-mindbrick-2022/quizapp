@@ -425,7 +425,7 @@ function quizRoute(app){
         const {directions, question,options,correctanswer,marks} = req.body
 
         const Data =  {question,options,correctanswer,marks}
-        console.log(Data)
+        // console.log(Data)
         if (directions){
             Data.directions = directions
         }
@@ -443,7 +443,7 @@ function quizRoute(app){
         res.render('test/starttest')
     })
 
-    app.post('/starttest',createCandidate().startTest)
+    app.post('/starttest',user,createCandidate().startTest)
     app.get('/questions',user,(req,res)=>{
         Getquestion.find({}).then((ques)=>{
             res.render('test/index',{'question':JSON.stringify(ques)})

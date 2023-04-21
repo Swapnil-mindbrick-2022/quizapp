@@ -37,6 +37,23 @@
         display: flex;
         justify-content: center;
     }
+    .btn {
+  background-color: #0d0d0d; /* Default button color */
+  color: #fff; /* Default button text color */
+  border: none; /* Remove button border */
+  padding: 10px 20px; /* Set button padding */
+  font-size: 16px; /* Set button font size */
+  border-radius: 5px; /* Round button edges */
+}
+
+.btn:hover {
+  background-color: #ff0000; /* Change button color on hover */
+}
+
+.glow-effect:hover {
+  box-shadow: 0 0 10px #ff0000; /* Add glowing effect on hover */
+}
+
 </style>
 <body>
     <div class='header'>
@@ -71,10 +88,12 @@
            
                  
                  <form action="/starttest" method="post">
-                    <button type="submit" class="btn btn-warning">Click Here To Begin Your Test..</button>
+                    <button type="submit" class="btn btn-dark glow-effect">Click Here To Begin Your Test..</button>
+
                 </form>
 
         </div>
+
             <div style="margin-right: 100px;">
                 
             </div>
