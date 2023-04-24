@@ -46,11 +46,16 @@ const Noty = require('noty')
                 const useremail = req.user.username;
                 const name = req.user.Name
                 const hallticket = req.user.Rollno
-                const userId = req.user._id;
-                let totalQuestions;
+                const startTime = new Date().getTime()
+
                 Results.findOne({emailId:useremail}).then((data)=>{
                     if (data){
-                        return res.send('You have already Appeared in this Test..')
+                        if (data.questionsAttempted == 30){
+                            return res.send('You have already Appeared in this Test..')
+                        }else{
+                            return res.redirect('/questions')
+                        }
+                        
                     }
                     
                 req.session.testStatus = "active"
@@ -59,10 +64,11 @@ const Noty = require('noty')
                         Name:name,
                         hallTicketNumber:hallticket,
                         totalMarks:70,
-                        testStatus:'started'
+                        testStatus:'started',
+                        startTime :startTime
                     })
                     result.save().then((data)=>{
-                        console.log(data)
+                        // console.log(data)
                         res.redirect('/questions')
                     })
         
@@ -109,16 +115,34 @@ const Noty = require('noty')
         
             },
             async updateMarks(req,res){
-                const marksobtained = req.body.marks
-                if (! req.user){
-                    return res.redirect('/')
-                }
+                const answer = req.body.answer
+                const questionId = req.body.id
+                let marksObtained = 0
+
+                questions.findById({_id:questionId}).then((ans)=>{
+                    if (ans.correctanswer == answer){
+                        console.log('correct',ans.correctanswer,'selected',answer)
+                        marksObtained = ans.marks
+                      
+                    }else if (answer.correctanswer !== answer){
+                        console.log('is wrong--',answer )
+                        marksObtained = 0
+                    }
+                    
+                    
                 const userid = req.user.username
                 Results.findOneAndUpdate(
                     { emailId: userid },
-                    { $inc: { questionsAttempted: 1, marksObtained: marksobtained } },
+                    { $inc: { questionsAttempted: 1, marksObtained: marksObtained } },
                     { new: true },
                 ).then(result => res.send(result)).catch(err => res.send(err))
+                
+                }).catch(err => console.log(err))
+                if (! req.user){
+                    return res.redirect('/')
+                }
+                // console.log(marksObtained)
+             
             }
     }
     }

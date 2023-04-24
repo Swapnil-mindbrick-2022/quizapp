@@ -26,10 +26,13 @@ resultSchema = new Schema( {
         type:String,
         default:'pending'
     },
+    startTime:Date,
+    time:Number,
     questionsAttempted:{
         type:Number,
         default:0
     },
+
     date :{ type : Date, default: Date.now }
 })
 results = mongoose.model('result',resultSchema);

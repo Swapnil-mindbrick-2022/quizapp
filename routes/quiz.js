@@ -410,7 +410,7 @@ function quizRoute(app){
         }
         const email = req.user.username
             results.findOne({emailId:email}).then((result)=>{
-                console.log(result)
+                // console.log(result)
                 res.send(result)
             }).catch((err) => {
                 res.send(err)
@@ -446,9 +446,40 @@ function quizRoute(app){
     app.post('/starttest',user,createCandidate().startTest)
     app.get('/questions',user,(req,res)=>{
         Getquestion.find({}).then((ques)=>{
-            res.render('test/index',{'question':JSON.stringify(ques)})
-            // console.log(ques.length)
-            // res.send(ques)
+            let ans = []
+            ques.forEach((sol)=>{
+                let obj = {_id:sol._id,
+                    directions:sol.directions,
+                    question:sol.question,
+                    options:sol.options,
+                    marks:sol.marks,
+                    // correctanswer:sol.answer
+                }
+                ans.push(obj)
+            })
+            //It means that test Button has not been clicked---
+            if (! req.session.testStatus){
+                return res.redirect('/starttest')
+            }
+            // console.log(ans.length)
+            
+            results.findOne({emailId:req.user.username}).then((timer)=>{
+                const time = 3600
+                const endTime = new Date(timer.startTime.getTime() + time * 1000);
+                // calculate the time remaining in minutes and seconds format
+                const now = new Date();
+                const diff = (endTime.getTime() - now.getTime()) / 1000; // convert to seconds
+                const minutes = Math.floor(diff / 60);
+                const seconds = Math.floor(diff % 60);
+
+                // format the time remaining as a string in minutes and seconds format
+                const timeRemaining = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} sec`;
+
+
+                return res.render('test/index',{'question':JSON.stringify(ans),'timeRemaining':timeRemaining,'startTime':timer.startTime})
+
+            }).catch(err => console.log(err))
+            
         }).catch((err)=>{
             res.send(err)
         })
